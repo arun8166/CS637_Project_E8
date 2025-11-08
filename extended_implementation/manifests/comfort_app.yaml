@@ -1,0 +1,10 @@
+app_id: comfort-app
+profile: ZoneThermostatProfile
+args:
+  zone_label: "ZoneA"
+delegation: intersection
+write_rate_limit_per_min: 60
+permissions:
+  read: true
+  write: true
+user: alice
