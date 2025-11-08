@@ -1,0 +1,28 @@
+@prefix brick: <https://brickschema.org/schema/Brick#> .
+@prefix bldg: <urn:demo:building#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+bldg:BuildingA a brick:Building ; rdfs:label "BuildingA" .
+
+bldg:Floor1 a brick:Floor ; brick:isPartOf bldg:BuildingA ; rdfs:label "Floor1" .
+bldg:Floor2 a brick:Floor ; brick:isPartOf bldg:BuildingA ; rdfs:label "Floor2" .
+
+bldg:ZoneA a brick:HVAC_Zone ; brick:isPartOf bldg:Floor1 ; rdfs:label "ZoneA" .
+bldg:ZoneB a brick:HVAC_Zone ; brick:isPartOf bldg:Floor2 ; rdfs:label "ZoneB" .
+
+bldg:AHU1 a brick:AHU ; brick:isPartOf bldg:BuildingA ; rdfs:label "AHU1" .
+bldg:VAV_A a brick:VAV ; brick:feeds bldg:ZoneA ; brick:isPartOf bldg:AHU1 ; rdfs:label "VAV_A" .
+bldg:VAV_B a brick:VAV ; brick:feeds bldg:ZoneB ; brick:isPartOf bldg:AHU1 ; rdfs:label "VAV_B" .
+
+bldg:ThermostatA a brick:Thermostat ; brick:isPartOf bldg:ZoneA ; rdfs:label "ThermostatA" .
+bldg:ThermostatB a brick:Thermostat ; brick:isPartOf bldg:ZoneB ; rdfs:label "ThermostatB" .
+
+bldg:ZoneA_Cool_SP a brick:Zone_Air_Cooling_Temperature_Setpoint ;
+  brick:isPointOf bldg:ThermostatA ; rdfs:label "F1_ZoneA_Cool_SP" .
+bldg:ZoneA_Heat_SP a brick:Zone_Air_Heating_Temperature_Setpoint ;
+  brick:isPointOf bldg:ThermostatA ; rdfs:label "F1_ZoneA_Heat_SP" .
+
+bldg:ZoneB_Cool_SP a brick:Zone_Air_Cooling_Temperature_Setpoint ;
+  brick:isPointOf bldg:ThermostatB ; rdfs:label "F2_ZoneB_Cool_SP" .
+bldg:ZoneB_Heat_SP a brick:Zone_Air_Heating_Temperature_Setpoint ;
+  brick:isPointOf bldg:ThermostatB ; rdfs:label "F2_ZoneB_Heat_SP" .

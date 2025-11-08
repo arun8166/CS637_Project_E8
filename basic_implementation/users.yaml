@@ -1,0 +1,16 @@
+users:
+  alice:
+    sparql_read: |
+      PREFIX brick: <https://brickschema.org/schema/Brick#>
+      SELECT ?pt WHERE { ?pt a ?cls .
+        VALUES ?cls {
+          brick:Zone_Air_Cooling_Temperature_Setpoint
+          brick:Zone_Air_Heating_Temperature_Setpoint
+        }
+      }
+    sparql_write: |
+      PREFIX brick: <https://brickschema.org/schema/Brick#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      SELECT ?pt WHERE {
+        ?pt a brick:Zone_Air_Cooling_Temperature_Setpoint ; rdfs:label ?lbl .
+      }

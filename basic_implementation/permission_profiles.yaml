@@ -1,0 +1,29 @@
+profiles:
+  ZoneThermostatProfile:
+    description: "Cooling and heating setpoints for a given zone label"
+    args:
+      zone_label: { type: "brick:HVAC_Zone" }
+    sparql: |
+      PREFIX brick: <https://brickschema.org/schema/Brick#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      SELECT ?pt WHERE {
+        ?zone a brick:HVAC_Zone ; rdfs:label "{{ zone_label }}" .
+        ?t brick:isPartOf ?zone .
+        ?pt a ?cls .
+        VALUES ?cls { brick:Zone_Air_Cooling_Temperature_Setpoint brick:Zone_Air_Heating_Temperature_Setpoint }
+        ?pt brick:isPointOf ?t .
+      }
+
+  FloorCoolingProfile:
+    description: "All cooling setpoints on a given floor label"
+    args:
+      floor_label: { type: "brick:Floor" }
+    sparql: |
+      PREFIX brick: <https://brickschema.org/schema/Brick#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      SELECT ?pt WHERE {
+        ?fl a brick:Floor ; rdfs:label "{{ floor_label }}" .
+        ?z a brick:HVAC_Zone ; brick:isPartOf ?fl .
+        ?t brick:isPartOf ?z .
+        ?pt a brick:Zone_Air_Cooling_Temperature_Setpoint ; brick:isPointOf ?t .
+      }

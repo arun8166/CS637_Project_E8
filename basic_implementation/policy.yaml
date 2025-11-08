@@ -1,0 +1,38 @@
+guards:
+  Zone_Air_Cooling_Temperature_Setpoint:
+    min: 19.0
+    max: 26.0
+    max_step: 2.0
+  Zone_Air_Heating_Temperature_Setpoint:
+    min: 18.0
+    max: 24.0
+    max_step: 2.0
+
+validators:
+  defaults:
+    Zone_Air_Cooling_Temperature_Setpoint:
+      - type: range
+      - type: rate
+      - type: energy_budget
+    Zone_Air_Heating_Temperature_Setpoint:
+      - type: range
+      - type: rate
+
+constraints:
+  energy_budget_watts: 5000
+  energy_per_degree_watts: 150
+  min_cool_setpoint: 20.0
+  max_heat_setpoint: 24.0
+
+monitor:
+  window_seconds: 12
+  threshold_count: 5
+  cooling_min: 20.0
+  cooling_reset: 22.0
+  actions:
+    - type: reset_points
+      match: "Cool_SP"
+    - type: revoke_capabilities
+      scope: "all"
+    - type: terminate_apps
+      scope: "all"
